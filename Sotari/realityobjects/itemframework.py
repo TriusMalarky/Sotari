@@ -7,8 +7,10 @@ class Item:
 class Equipment(Item):
     pass
 
-
 class Weapon(Equipment):
+    pass
+
+class Armor(Equipment):
     pass
 
 class Currency(Item):
