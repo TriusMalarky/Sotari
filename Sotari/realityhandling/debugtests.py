@@ -8,3 +8,6 @@ def debugtest():
 
     hat = Equipment()
     print(hat.value)
+
+    sword = Weapon()
+    print(sword.value)
