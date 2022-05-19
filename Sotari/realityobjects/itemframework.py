@@ -4,3 +4,7 @@ class Item:
 
 class Equipment(Item):
     pass
+
+
+class Weapon(Equipment):
+    pass
