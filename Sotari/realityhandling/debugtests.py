@@ -1,2 +1,6 @@
+from realityobjects.itemframework import Item
+
 def debugtest():
-    pass
+
+    # Test Items
+    chair = Item()
