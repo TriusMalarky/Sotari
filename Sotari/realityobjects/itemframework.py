@@ -3,6 +3,12 @@ class Item:
         self.name = name
         self.value = value
 
+    def set_value(self, new_value):
+        self.value = new_value
+
+    def set_name(self, new_name):
+        self.name = new_name
+
 
 class Equipment(Item):
     pass
