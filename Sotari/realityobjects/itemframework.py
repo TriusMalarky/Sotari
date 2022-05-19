@@ -10,3 +10,6 @@ class Equipment(Item):
 
 class Weapon(Equipment):
     pass
+
+class Currency(Item):
+    pass
