@@ -4,13 +4,18 @@ class World:
 
 
 class Continent:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 class Island:
-    pass
+    def __init__(self, name):
+        self.name = name
+        self.region = Region(name)
 
 class Region:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 class Nation:
-    pass
+    def __init__(self, name):
+        self.name = name

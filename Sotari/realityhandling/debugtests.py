@@ -16,6 +16,7 @@ def debugtest():
     hat = Equipment("hat")
     print(" > > Hat Name: " + hat.name)
     print(" > > Hat Value: " + str(hat.value))
+    print(" > > Hat Sus: " + str(hat.sus))
 
 
     print(" > Creating 'Sword' example object, inherits Weapon class")
