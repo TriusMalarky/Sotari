@@ -32,3 +32,4 @@ def debugtest():
     print(" > Printing Continent Names")
     for i in world.continents:
         print(i.name)
+        print("No. Regions: " + str(len(i.regions)))
