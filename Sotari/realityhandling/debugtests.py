@@ -1,4 +1,5 @@
 from realityobjects.itemframework import *
+from realityobjects.worldframework import *
 
 def debugtest():
 
@@ -23,3 +24,11 @@ def debugtest():
     sword = Weapon("sword")
     print(" > > Sword Name: " + sword.name)
     print(" > > Sword Value: " + str(sword.value))
+
+    # World Tests
+    print(" -- World Tests --")
+    world = World("ham", False)
+    print(" > Number of Continents: " + str(len(world.continents)))
+    print(" > Printing Continent Names")
+    for i in world.continents:
+        print(i.name)
