@@ -4,7 +4,7 @@ class Player:
     sus = 0
     threat = 0
 
-    hp = 0
+    hp = 12
 
 
 

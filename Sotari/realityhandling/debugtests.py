@@ -54,3 +54,5 @@ def debugtest():
     player.increment_stat('physical')
     player.increment_stat('physical')
     print(" > Player's physical stat after incrementing several times: " + str(player.get_stat('physical')))
+    player.set_stat('physical', 3)
+    print(" > Player's physical stat after setting it to 3: " + str(player.get_stat('physical')))
