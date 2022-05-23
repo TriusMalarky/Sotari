@@ -20,12 +20,16 @@ def debugtest():
     print(" > > Hat Name: " + hat.name)
     print(" > > Hat Value: " + str(hat.value))
     print(" > > Hat Sus: " + str(hat.sus))
+    hat.set_suspicious(5)
+    print(" > > Hat Sus after setting it to 5: " + str(hat.sus))
 
 
     print(" > Creating 'Sword' example object, inherits Weapon class")
     sword = Weapon("sword")
     print(" > > Sword Name: " + sword.name)
     print(" > > Sword Value: " + str(sword.value))
+    sword.set_suspicious(7)
+    print(" > > Sword Sus: " + str(sword.sus))
 
     # World Tests
     print(" -- World Tests --")
