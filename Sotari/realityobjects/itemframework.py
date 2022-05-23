@@ -18,7 +18,9 @@ class Equipment(Item):
 
     def set_suspicious(self, sus):
         self.sus = sus
-    
+
+    def set_threat(self, threat):
+        self.threat = threat
 
 class Weapon(Equipment):
     pass
