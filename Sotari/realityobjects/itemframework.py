@@ -18,6 +18,7 @@ class Equipment(Item):
 
     def set_suspicious(self, sus):
         self.sus = sus
+    
 
 class Weapon(Equipment):
     pass
