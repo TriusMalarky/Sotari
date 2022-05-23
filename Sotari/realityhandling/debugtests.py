@@ -1,5 +1,7 @@
 from realityobjects.itemframework import *
 from realityobjects.worldframework import *
+from realityobjects.player import *
+from realityobjects.nonplayercharacter import *
 
 def debugtest():
 
@@ -33,3 +35,10 @@ def debugtest():
     for i in world.continents:
         print(i.name)
         print("No. Regions: " + str(len(i.regions)))
+
+    # Player Tests
+    print(" -- Player Tests --")
+    player = Player()
+    print(" > Player's default name: " + player.name)
+    player.set_name("Tergrid")
+    print(" > Player's name after setting it to Tergrid: " + player.name)
