@@ -8,6 +8,11 @@ class Save:
     def __init__(self):
         self.log = ["Initiated " + str(time())]
 
+    def Log(self, log):
+        self.log.append(" - " + log + " " + str(time()))
+        Dump(self)
+
+
 def Dump(save):
     with open('config\\save.txt', 'wb') as config_dictionary_file:
         pickle.dump(save, config_dictionary_file)

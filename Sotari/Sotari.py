@@ -7,8 +7,5 @@ if __name__ == "__main__":
     if debug:
         debugtest()
 
-    save = Load()
-    for i in save.log:
-        print(i)
-    Dump(save)
+
     app = Application()
