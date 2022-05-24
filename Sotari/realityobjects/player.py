@@ -61,3 +61,15 @@ class Player:
 
     def get_stat(self, stat):
         return self.stats[stat]
+
+    def set_protection(self, prot, amount):
+        self.protection[prot] = amount
+
+    def set_defense(self, defe, amount):
+        self.defense[defe] = amount
+
+    def set_suspicious(self, sus):
+        self.sus = sus
+
+    def set_threat(self, threat):
+        self.threat = threat
