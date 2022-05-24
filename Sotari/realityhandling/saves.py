@@ -19,6 +19,16 @@ def Load():
     except EOFError as e:
         save = Save()
         save.log.append("Error: EOF Found.")
+        save.log.append(e)
+    except FileNotFoundError as e:
+        f = open("config\\save.txt", "x")
+        f.close()
+        save = Save()
+        save.log.append("Error: File not found.")
+        save.log.append(e)
+    except Exception as e:
+        save.log.append("Error: Unkown error.")
+        save.log.append(e)
     finally:
         save.log.append("Loaded on " + str(time()))
         Dump(save)
