@@ -50,7 +50,7 @@ class Armor(Equipment):
         "arcane": 0,
         "pure": 0
     }
-    
+
     def set_protection(self, prot, amount):
         self.protection[prot] = amount
 
@@ -58,4 +58,9 @@ class Armor(Equipment):
         self.defense[defe] = amount
 
 class Currency(Item):
-    pass
+    value = 1
+
+class Instance():
+    def __init__(self, item):
+        self.instance = item
+        self.name = self.instance.name
