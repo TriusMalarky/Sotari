@@ -16,6 +16,19 @@ class Equipment(Item):
     sus = 0
     threat = 0
 
+
+    def set_suspicious(self, sus):
+        self.sus = sus
+
+    def set_threat(self, threat):
+        self.threat = threat
+
+
+
+class Weapon(Equipment):
+    pass
+
+class Armor(Equipment):
     defense = {
         "sharp": 0,
         "blunt": 0,
@@ -37,24 +50,12 @@ class Equipment(Item):
         "arcane": 0,
         "pure": 0
     }
-
-    def set_suspicious(self, sus):
-        self.sus = sus
-
-    def set_threat(self, threat):
-        self.threat = threat
-
+    
     def set_protection(self, prot, amount):
         self.protection[prot] = amount
 
     def set_defense(self, defe, amount):
         self.defense[defe] = amount
-
-class Weapon(Equipment):
-    pass
-
-class Armor(Equipment):
-    pass
 
 class Currency(Item):
     pass
