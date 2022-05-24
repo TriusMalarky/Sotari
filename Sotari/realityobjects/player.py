@@ -25,6 +25,30 @@ class Player:
         'material': 0,
     }
 
+    inventory = []
+
+    equipment = []
+    defense = {
+        "sharp": 0,
+        "blunt": 0,
+        "fire": 0,
+        "ice": 0,
+        "lightning": 0,
+        "toxic": 0,
+        "arcane": 0,
+        "pure": 0
+    }
+
+    protection =  {
+        "sharp": 0,
+        "blunt": 0,
+        "fire": 0,
+        "ice": 0,
+        "lightning": 0,
+        "toxic": 0,
+        "arcane": 0,
+        "pure": 0
+    }
 
     def set_name(self, name):
         self.name = name
