@@ -1,8 +1,17 @@
 import wx
 from realityhandling.saves import *
+import subprocess
+import sys
+import pickle
+import os
+import tkinter
+from tkinter import filedialog
+
+
 
 class MyFrame(wx.Frame):
     def __init__(self, save):
+        self.save = save
         save.Log("Initializing Screen")
         super().__init__(parent=None, title='Unnamed TTRPG System')
         panel = wx.Panel(self)
@@ -20,19 +29,50 @@ class MyFrame(wx.Frame):
         import_button = wx.Button(panel, label='Import', pos=(245, 5))
         import_button.Bind(wx.EVT_BUTTON, self.on_press_import)
 
+
         self.Show()
 
     def on_press_worlds(self, event):
-        pass
+        try:
+            pass
+        # General exception to get log added to save
+        except Exception as e:
+            self.save.log(" - Unknown Error when attempting to open worlds dialogue:")
+            self.save.lof(e)
 
     def on_press_settings(self, event):
-        pass
+        try:
+            pass
+        # General exception to get log added to save
+        except Exception as e:
+            self.save.log(" - Unknown Error when attempting to open settings dialogue:")
+            self.save.lof(e)
 
     def on_press_export(self, event):
-        pass
+        try:
+            # Following Code borrowed from user Simimic
+            # https://stackoverflow.com/questions/66663179/how-to-use-windows-file-explorer-to-select-and-return-a-directory-using-python
+            tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
+            folder_path = filedialog.askdirectory()
+
+            with open(folder_path + "\\testsave.txt", 'wb') as config_dictionary_file:
+                pickle.dump(self.save, config_dictionary_file)
+
+        # General exception to get log added to save
+        except Exception as e:
+            self.save.log(" - Unknown Error when attempting to export save file:")
+            self.save.lof(e)
 
     def on_press_import(self, event):
-        pass
+        try:
+            pass
+        # General exception to get log added to save
+        except Exception as e:
+            self.save.log(" - Unknown Error when attempting to import save file:")
+            self.save.lof(e)
+
+
+
 
 class Application:
 
