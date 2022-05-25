@@ -152,10 +152,11 @@ class MyFrame(wx.Frame):
             # Following Code borrowed from user Simimic
             # https://stackoverflow.com/questions/66663179/how-to-use-windows-file-explorer-to-select-and-return-a-directory-using-python
             tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
-            folder_path = filedialog.askdirectory()
+            folder_path = filedialog.askopenfile()
 
-            with open(folder_path, 'rb') as config_dictionary_file:
+            with open(folder_path.name, 'rb') as config_dictionary_file:
                 self.save.worlds.append(pickle.load(config_dictionary_file))
+            Dump(self.save)
         # General exception to get log added to save
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to import save file:")
