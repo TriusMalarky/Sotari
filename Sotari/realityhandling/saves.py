@@ -7,6 +7,7 @@ def time():
 class Save:
     def __init__(self):
         self.log = ["Initiated " + str(time())]
+        self.worlds = []
 
     def Log(self, log):
         self.log.append(" - " + log + " " + str(time()))

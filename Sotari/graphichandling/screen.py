@@ -7,7 +7,11 @@ import pickle
 import os
 import tkinter
 from tkinter import filedialog
-
+from realityobjects.itemframework import *
+from realityobjects.worldframework import *
+from realityobjects.player import *
+from realityobjects.nonplayercharacter import *
+from realityhandling.saves import *
 
 
 class MyFrame(wx.Frame):
@@ -16,6 +20,7 @@ class MyFrame(wx.Frame):
         save.Log("Initializing Screen")
         super().__init__(parent=None, title='Unnamed TTRPG System')
         panel = wx.Panel(self)
+        self.panel = panel
 
         self.SetMinSize(wx.Size(360, 240))
 
@@ -49,28 +54,40 @@ class MyFrame(wx.Frame):
         worlds_scroll.SetupScrolling()
         worlds_scroll.SetBackgroundColour('#FFFFFF')
 
+        export_options = scrolled.ScrolledPanel(self,-1, size=(100,self.Size[1] - 50), pos=(0,50), style=wx.SIMPLE_BORDER)
+        self.export_options = export_options
+        export_options.SetupScrolling()
+        export_options.SetBackgroundColour('#FFFFFF')
 
-        button1 = wx.Button(worlds_scroll,label="Button 1",pos=(0,50),size=(50,50))
-        button2 = wx.Button(worlds_scroll,label="Button 2",pos=(0,100), size=(50,50))
-        button3 = wx.Button(worlds_scroll,label="Button 3",pos=(0,150),size=(50,50))
-        button4 = wx.Button(worlds_scroll,label="Button 4",pos=(0,200), size=(50,50))
-        button5 = wx.Button(worlds_scroll,label="Button 5",pos=(0,250),size=(50,50))
-        button6 = wx.Button(worlds_scroll,label="Button 6",pos=(0,300), size=(50,50))
-        button7 = wx.Button(worlds_scroll,label="Button 7",pos=(0,350), size=(50,50))
-        button8 = wx.Button(worlds_scroll,label="Button 8",pos=(0,400), size=(50,50))
+        self.worlds_scroll_options = []
+        self.export_options_list = []
+
+        for i in self.save.worlds:
+            self.worlds_scroll_options.append(wx.Button(worlds_scroll,label=i.name,pos=(0,50),size=(80,50)))
+
+        for i in self.save.worlds:
+            button = wx.Button(export_options,label=i.name,pos=(0,50),size=(80,50))
+            button.world = i
+            self.export_options_list.append(button)
+            button.Bind(wx.EVT_BUTTON, lambda evt, temp = i: self.modal_export(evt, temp))
+
+
+        self.new_world_button = wx.Button(worlds_scroll,label="New World",pos=(0,50),size=(80,50))
+        self.new_world_button.Bind(wx.EVT_BUTTON, self.press_new_world)
+
 
 
 
         bSizer = wx.BoxSizer( wx.VERTICAL )
-        bSizer.Add( button1, 0, wx.ALL, 5 )
-        bSizer.Add( button2, 0, wx.ALL, 5 )
-        bSizer.Add( button3, 0, wx.ALL, 5 )
-        bSizer.Add( button4, 0, wx.ALL, 5 )
-        bSizer.Add( button5, 0, wx.ALL, 5 )
-        bSizer.Add( button6, 0, wx.ALL, 5 )
-        bSizer.Add( button7, 0, wx.ALL, 5 )
-        bSizer.Add( button8, 0, wx.ALL, 5 )
+        for i in self.worlds_scroll_options:
+            bSizer.Add(i, 0, wx.ALL, 5)
+        bSizer.Add(self.new_world_button, 0, wx.ALL, 5)
         worlds_scroll.SetSizer( bSizer )
+
+        exportsizer = wx.BoxSizer( wx.VERTICAL )
+        for i in self.export_options_list:
+            exportsizer.Add(i, 0, wx.ALL, 5)
+        export_options.SetSizer( exportsizer )
 
         self.Bind(wx.EVT_SIZE, self.size_change)
         self.Show()
@@ -79,9 +96,24 @@ class MyFrame(wx.Frame):
         self.task_panel.SetSize(self.Size[0], 50)
         self.worlds_scroll.SetSize(100,self.Size[1] - 50)
 
+    def press_new_world(self, event):
+        try:
+            dlg = wx.TextEntryDialog(self, 'Enter New World Name', '')
+            dlg.SetValue("")
+            if dlg.ShowModal() == wx.ID_OK:
+                print('You entered: %s\n' % dlg.GetValue())
+                self.save.worlds.append(World(dlg.GetValue(), False))
+                Dump(self.save)
+            dlg.Destroy()
+        # General exception to get log added to save
+        except Exception as e:
+            self.save.log(" - Unknown Error when attempting to create new world:")
+            self.save.lof(e)
+
     def on_press_worlds(self, event):
         try:
             self.worlds_scroll.Show()
+            self.export_options.Hide()
         # General exception to get log added to save
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to open worlds dialogue:")
@@ -90,36 +122,40 @@ class MyFrame(wx.Frame):
     def on_press_settings(self, event):
         try:
             self.worlds_scroll.Hide()
+            self.export_options.Hide()
         # General exception to get log added to save
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to open settings dialogue:")
             self.save.lof(e)
 
-    def on_press_export(self, event):
-        try:
-            pass
-        # General exception to get log added to save
-        except Exception as e:
-            self.save.log(" - Unknown Error when attempting to select exportable world:")
-            self.save.lof(e)
+    def modal_export(self, event, world):
+        # Following Code borrowed from user Simimic
+        # https://stackoverflow.com/questions/66663179/how-to-use-windows-file-explorer-to-select-and-return-a-directory-using-python
+        tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
+        folder_path = filedialog.askdirectory()
 
+        with open(folder_path + "\\" + world.name + ".txt", 'wb') as config_dictionary_file:
+            pickle.dump(world, config_dictionary_file)
+
+
+
+
+    def on_press_export(self, event):
+        self.worlds_scroll.Hide()
+        self.export_options.Show()
+
+    def on_press_import(self, event):
         try:
+            self.worlds_scroll.Hide()
+            self.export_options.Hide()
+
             # Following Code borrowed from user Simimic
             # https://stackoverflow.com/questions/66663179/how-to-use-windows-file-explorer-to-select-and-return-a-directory-using-python
             tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
             folder_path = filedialog.askdirectory()
 
-            with open(folder_path + "\\testsave.txt", 'wb') as config_dictionary_file:
-                pickle.dump(self.save, config_dictionary_file)
-
-        # General exception to get log added to save
-        except Exception as e:
-            self.save.log(" - Unknown Error when attempting to export save file:")
-            self.save.lof(e)
-
-    def on_press_import(self, event):
-        try:
-            pass
+            with open(folder_path, 'rb') as config_dictionary_file:
+                self.save.worlds.append(pickle.load(config_dictionary_file))
         # General exception to get log added to save
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to import save file:")
