@@ -22,7 +22,7 @@ class MyFrame(wx.Frame):
         panel = wx.Panel(self)
         self.panel = panel
 
-        self.SetMinSize(wx.Size(360, 240))
+        self.SetMinSize(wx.Size(450, 240))
 
 
         task_panel = wx.Panel(self, -1, size=(self.Size[0], 50), pos=(0,0), style=wx.SIMPLE_BORDER)
@@ -30,6 +30,9 @@ class MyFrame(wx.Frame):
 
         worlds_button = wx.Button(task_panel, label='Worlds', pos=(5, 5))
         worlds_button.Bind(wx.EVT_BUTTON, self.on_press_worlds)
+
+        items_button = wx.Button(task_panel, label='Items', pos=(5, 5))
+        items_button.Bind(wx.EVT_BUTTON, self.on_press_items)
 
         settings_button = wx.Button(task_panel, label='Settings', pos=(85, 5))
         settings_button.Bind(wx.EVT_BUTTON, self.on_press_settings)
@@ -43,6 +46,7 @@ class MyFrame(wx.Frame):
 
         tSizer = wx.BoxSizer( wx.HORIZONTAL )
         tSizer.Add( worlds_button, 0, wx.ALL, 5 )
+        tSizer.Add( items_button, 0, wx.ALL, 5 )
         tSizer.Add( settings_button, 0, wx.ALL, 5 )
         tSizer.Add( export_button, 0, wx.ALL, 5 )
         tSizer.Add( import_button, 0, wx.ALL, 5 )
@@ -164,6 +168,9 @@ class MyFrame(wx.Frame):
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to import save file:")
             self.save.lof(e)
+
+    def on_press_items(self, event):
+        pass
 
 
 
