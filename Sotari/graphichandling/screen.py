@@ -92,6 +92,7 @@ class MyFrame(wx.Frame):
         worlds_scroll.SetSizer( bSizer )
 
         exportsizer = wx.BoxSizer( wx.VERTICAL )
+        self.exportsizer = exportsizer
         for i in self.export_options_list:
             exportsizer.Add(i, 0, wx.ALL, 5)
         export_options.SetSizer( exportsizer )
@@ -109,12 +110,20 @@ class MyFrame(wx.Frame):
 
     def press_new_world(self, event):
         try:
+            # Get and store world name entry
             dlg = wx.TextEntryDialog(self, 'Enter New World Name', '')
             dlg.SetValue("")
             value = ""
+
             if dlg.ShowModal() == wx.ID_OK:
-                print('You entered: %s\n' % dlg.GetValue())
-                self.save.worlds.append(World(dlg.GetValue(), False))
+                if wx.MessageBox(
+                    "Would you like to build this world from scratch?"
+                    , "World Wizard",
+                     wx.YES_NO | wx.NO_DEFAULT, self) == wx.NO:
+
+                    self.save.worlds.append(World(dlg.GetValue(), False))
+                else:
+                    pass
                 value = dlg.GetValue()
                 Dump(self.save)
             dlg.Destroy()
@@ -122,6 +131,10 @@ class MyFrame(wx.Frame):
             button = wx.Button(self.worlds_scroll, label=value, pos=(0, 50), size=(80, 50))
             self.worlds_scroll_options.append(button)
             self.bSizer.Add(button, 0, wx.ALL, 5)
+
+            button2 = wx.Button(self.export_options, label=value, pos=(0, 50), size=(80, 50))
+            self.export_options_list.append(button2)
+            self.exportsizer.Add(button2, 0, wx.ALL, 5)
 
             self.size_change_call()
 
@@ -186,10 +199,7 @@ class MyFrame(wx.Frame):
         pass
 
 
-
-
 class Application:
-
     save = Load()
     for i in save.log:
         print(i)
@@ -198,8 +208,5 @@ class Application:
     app = wx.App()
     frame = MyFrame(save)
     frame.Show()
-
-
-
 
     app.MainLoop()

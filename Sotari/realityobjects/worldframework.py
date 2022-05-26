@@ -16,6 +16,8 @@ class World:
                 regionsleft -= continentsize
                 self.continents.append(Continent(continentname(), continentsize))
 
+
+
 class Continent:
     def __init__(self, name, size):
         self.name = name
