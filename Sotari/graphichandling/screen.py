@@ -85,6 +85,7 @@ class MyFrame(wx.Frame):
 
 
         bSizer = wx.BoxSizer( wx.VERTICAL )
+        self.bSizer = bSizer
         for i in self.worlds_scroll_options:
             bSizer.Add(i, 0, wx.ALL, 5)
         bSizer.Add(self.new_world_button, 0, wx.ALL, 5)
@@ -99,6 +100,9 @@ class MyFrame(wx.Frame):
         self.Show()
 
     def size_change(self, event):
+        self.size_change_call()
+
+    def size_change_call(self):
         self.task_panel.SetSize(self.Size[0], 50)
         self.worlds_scroll.SetSize(110,self.Size[1] - 50)
         self.export_options.SetSize(110,self.Size[1] - 50)
@@ -107,11 +111,20 @@ class MyFrame(wx.Frame):
         try:
             dlg = wx.TextEntryDialog(self, 'Enter New World Name', '')
             dlg.SetValue("")
+            value = ""
             if dlg.ShowModal() == wx.ID_OK:
                 print('You entered: %s\n' % dlg.GetValue())
                 self.save.worlds.append(World(dlg.GetValue(), False))
+                value = dlg.GetValue()
                 Dump(self.save)
             dlg.Destroy()
+
+            button = wx.Button(self.worlds_scroll, label=value, pos=(0, 50), size=(80, 50))
+            self.worlds_scroll_options.append(button)
+            self.bSizer.Add(button, 0, wx.ALL, 5)
+
+            self.size_change_call()
+
         # General exception to get log added to save
         except Exception as e:
             self.save.log(" - Unknown Error when attempting to create new world:")
