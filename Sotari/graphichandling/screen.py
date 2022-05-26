@@ -49,15 +49,17 @@ class MyFrame(wx.Frame):
         task_panel.SetSizer( tSizer )
 
 
-        worlds_scroll = scrolled.ScrolledPanel(self,-1, size=(100,self.Size[1] - 50), pos=(0,50), style=wx.SIMPLE_BORDER)
+        worlds_scroll = scrolled.ScrolledPanel(self,-1, size=(110,self.Size[1] - 50), pos=(0,50), style=wx.SIMPLE_BORDER)
         self.worlds_scroll = worlds_scroll
         worlds_scroll.SetupScrolling()
         worlds_scroll.SetBackgroundColour('#FFFFFF')
 
-        export_options = scrolled.ScrolledPanel(self,-1, size=(100,self.Size[1] - 50), pos=(0,50), style=wx.SIMPLE_BORDER)
+        export_options = scrolled.ScrolledPanel(self,-1, size=(110,self.Size[1] - 50), pos=(0,50), style=wx.SIMPLE_BORDER)
         self.export_options = export_options
         export_options.SetupScrolling()
         export_options.SetBackgroundColour('#FFFFFF')
+
+        export_options.Hide()
 
         self.worlds_scroll_options = []
         self.export_options_list = []
@@ -94,7 +96,8 @@ class MyFrame(wx.Frame):
 
     def size_change(self, event):
         self.task_panel.SetSize(self.Size[0], 50)
-        self.worlds_scroll.SetSize(100,self.Size[1] - 50)
+        self.worlds_scroll.SetSize(110,self.Size[1] - 50)
+        self.export_options.SetSize(110,self.Size[1] - 50)
 
     def press_new_world(self, event):
         try:
