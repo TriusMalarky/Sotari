@@ -123,7 +123,9 @@ class MyFrame(wx.Frame):
 
                     self.save.worlds.append(World(dlg.GetValue(), False))
                 else:
-                    pass
+                    new_world = World(dlg.GetValue(), True)
+                    new_world.wizard(self)
+                    self.save.worlds.append(new_world)
                 value = dlg.GetValue()
                 Dump(self.save)
             dlg.Destroy()
